@@ -1,0 +1,12 @@
+1 - No "layout/theme.liquid" adicionar chamada do script da jquery
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+2 - No "custom css" do tema adicionar o conteúdo do arquivo "codigocss.txt"
+
+3 - No "sections/main-product.liquid"
+    Colocar a chamada do snippet "imprimeestrelas" onde se deseja exibir o link para  as avaliações
+    {%  render 'imprimeestrelas', idProduto: product.id %}
+
+4 - Ainda no "sections/main-product.liquid"
+    Colocar a chamada do snippet "imprimeavaliacoes" onde se deseja exibir as avaliações em si
+    {%  render 'imprimeavaliacoes' %}
