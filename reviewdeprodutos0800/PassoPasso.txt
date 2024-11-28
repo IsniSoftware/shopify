@@ -12,5 +12,3 @@ Acessar o tema default da loja.
 4 - Ainda no "sections/main-product.liquid"
     Colocar a chamada do snippet "imprimeavaliacoes" onde se deseja exibir as avaliações em si
     {%  render 'imprimeavaliacoes' %}
-
-5 -     
