@@ -1,0 +1,26 @@
+<br><br>
+<h2 class="product-recommendations__heading h2">Avaliações (<label id="lblNumAvaliacoes2"></label>)</h2>
+<font class="product-recommendations__heading h3">Classificação geral <br>
+<label class="product-recommendations__heading h2" id="lblNotaMediaAvaliacoesIsni"></label> <label id="notaGeral2"></label>
+</font>
+<div id='display_reviews'></div>
+<script>
+function tentaTratarReviews(){
+  try{
+    if( typeof arrReviewsIsni == "object" ){
+      aposCarregarArquivo();
+    }
+    else{
+      setTimeout( function(){
+                    tentaTratarReviews();
+                }, 1000 );
+    }
+  }catch(err){
+    setTimeout( function(){
+                    tentaTratarReviews();
+                }, 1000 );
+  }  
+}  
+
+tentaTratarReviews();
+</script>
