@@ -1,236 +1,61 @@
+<div id="divIsniEstrelaAvaliacoes" style="display: none;">
+  Avaliações (<label id="lblNumAvaliacoesIsni1"></label>): <label id="notaGeralAvaliacoesIsni1"></label>
+</div>
+
 <script>
 var rMediaNotaAvaliacoesIsni = 0;
 var arrReviewsIsni = null;
-var totalIsniImgIco = 0;
-var arrIsniReviewsLI = new Array();
 var sNotaGeralComEstrelas = '';
 var rPorcentagemEstrelas = 0;
-var isniImgBig = null;
-var captionIsniBigImg = null;
-  
-function aposCarregarArquivo(){  
-    imprimeReviews(); 
 
-    $("#lblNumAvaliacoes2").html( arrReviewsIsni.length );
-    $("#lblNotaMediaAvaliacoesIsni").html( rMediaNotaAvaliacoesIsni );
-
-    console.log( sNotaGeralComEstrelas );
-   
-    $("#notaGeral2").html( sNotaGeralComEstrelas );
-
-    $(".ratingIsni-upper").css({
-        width: rPorcentagemEstrelas + "%"
-    });   
-    
-    var modalExibeIsniBigImg = document.getElementById("modalExibeIsniBigImg");
-    
-    isniImgBig = document.getElementById("isniBigImg");
-    captionIsniBigImg = document.getElementById("captionIsniBigImg");
-    
-    var closeIsniBigImg = document.getElementsByClassName("closeIsniBigImg")[0];
-
-    closeIsniBigImg.onclick = function() { 
-       modalExibeIsniBigImg.style.display = "none";
-    }
-
-    for( var i=1; i<=totalIsniImgIco; i++ ){
-	   var img = document.getElementById("imgIsniIco_"+i);
-	   img.onclick = onClickIsniImgIcon;
-    }
- }
-
- function onClickIsniImgIcon(){
-   modalExibeIsniBigImg.style.display = "block";
-   isniImgBig.src = this.getAttribute("srcBig");
-   captionIsniBigImg.innerHTML = this.alt;
- }
-
- function imprimeReviews(){
-          totalIsniImgIco = 0;
-          arrIsniReviewsLI = new Array();
-
-          var arrTotalPorEstrelas = new Array();
-          arrTotalPorEstrelas[1] = 0;
-          arrTotalPorEstrelas[2] = 0;
-          arrTotalPorEstrelas[3] = 0;
-          arrTotalPorEstrelas[4] = 0;
-          arrTotalPorEstrelas[5] = 0;
-
-          var sEstilo1 = 'padding-top: 2.5rem; padding-bottom: 2.5rem;';
-          var sEstilo2 = 'position: relative; box-sizing: border-box;';
-
-          var sReviews = '';
-          var iNumReviews = 0;
-    
-          arrReviewsIsni.forEach( (element) =>{
-             sEstrelas = "";
-             sImgs = "";
-             var i=0;
-
-             if( element.numestrelas>=1 && element.numestrelas<=5 ){
-                arrTotalPorEstrelas[element.numestrelas]++;
-             }
-            
-             for( ; i<element.numestrelas; i++ ){
-               sEstrelas += "⭐";               
-             }
-             while( i<5 ){
-               sEstrelas += "✩";               
-               i++;
-             }
-
-             try{
-                 for( var iImg=0; iImg<element.imgs.length; iImg++ ){
-                   totalIsniImgIco++;
-
-                   sImgBig = element.imgs[iImg].imgico;
-                   if( element.imgs[iImg].imgbig ){
-                     sImgBig = element.imgs[iImg].imgbig;
-                   }
-                   sImgs += "<img id='imgIsniIco_" + totalIsniImgIco + "' class='isniImgIcon' src='" + element.imgs[iImg].imgico + "' srcBig='" + sImgBig + "' alt='" + element.usuario + "'>&nbsp;";
-                     
-                   //style='border: 1px solid #DDD; padding: 4px; border-radius: 2px;' src='" + element.imgs[iImg].img + "'></a>&nbsp;";               
-                   //<a href='zoomImgAvaliacaoReviw()'><img style='border: 1px solid #DDD; padding: 4px; border-radius: 2px;' src='" + element.imgs[iImg].img + "'></a>&nbsp;";               
-                 }
-             }catch(err){}
-
-             iNumReviews++;
-            
-             sReviews += '<li class="multicolumn-list__item grid__item" id="liReviewIsni_' + iNumReviews + '">'
-                            + '<div style="' + sEstilo2 + '" _class="multicolumn-card content-container">'
-                                  + '<div style="' + sEstilo1 + '" _ass="multicolumn-card__info">'
-                                        + '<h3>' + sEstrelas + ' ' + element.data + '</h3>'
-                                        + '<div class="rte"><p>' + element.texto + '<br><b>' + element.usuario + '</b></p></div>'
-                                        + sImgs
-                                  + '</div>'
-                            + '</div>'
-                       + '</li>';
-
-             arrIsniReviewsLI.push( { "idli" : "liReviewIsni_" + iNumReviews, "numestrelas" : element.numestrelas } );
-          });
-
-          var sTotalPorEstrelas = "<table width='350' style='font-size: 14pt; box-shadow: none; border: none; ' cellspacing='0' cellpadding='0'>";
-    
-          for( var i=5; i>=1; i-- ){
-              if( arrTotalPorEstrelas[i] <= 0 ){
-                 continue;
-              }
-              
-              //console.log( element );
-              sEstrelas = "";
-              for( var j=1; j<=i; j++ ){
-                 sEstrelas += "⭐";               
-              }
-              if( arrTotalPorEstrelas[i] > 0 ){
-                iPorcentagemEstrelas = ( arrTotalPorEstrelas[i] / arrReviewsIsni.length );
-                iPorcentagemEstrelas = Math.round( 100 * iPorcentagemEstrelas );
-                  
-                //sTotalPorEstrelas += "<a id='linkLiMostraAvaliacoesIsni_" + i + "' href='javascript:trataExibicaoAvaliacoesIsniComEstrelas(" + i + ")'>" + sEstrelas + " (" + arrTotalPorEstrelas[i] + ")</a><br>"; 
-                sTotalPorEstrelas += '<tr style="border: none;"><td width="15" style="border: none; padding: 0px !important;">' + i + '</td>'
-                                       + '<td width="25" style="border: none; text-align: center; padding: 0px !important;">⭐</td>'
-                                       + '<td width="*" style="border: none; padding: 0px 10px 0px 0px !important;"><div style="background-color:#CCC !important; border-radius: 2px;"><div style="background-color:#000 !important; height:4px !important; border-radius: 2px; width:' + iPorcentagemEstrelas + '% !important;">&nbsp;</div></div></td>'
-                                       + '<td width="20" style="border: none; text-align: right; padding: 0px !important;"><a title="Porcentagem de avaliações: ' + iPorcentagemEstrelas + '%" id="linkLiMostraAvaliacoesIsni_' + i + '" href="javascript:trataExibicaoAvaliacoesIsniComEstrelas(' + i + ')">' + arrTotalPorEstrelas[i] + '</a></td></tr>';
-              }
-              else{
-                //sTotalPorEstrelas += sEstrelas + "<br>"; 
-              }
-          }
-
-          sTotalPorEstrelas += "</table><a href='javascript:removeFiltroAvaliacoesIsni()' id='lnkRemoveFiltroAvaliacoesIsni' style='display:none;'>Exibir todas</a>";
-
-          sReviews =  '<ul class="multicolumn-list grid grid--1-col-tablet-down grid--2-col-desktop" role="list">'
-                                   + '<li class="multicolumn-list__item grid__item">'
-                                       + '<div style="' + sEstilo2 + '" _class="multicolumn-card content-container">'
-                                          + '<div style="' + sEstilo1 + '" _class="multicolumn-card__info">' + sTotalPorEstrelas + '</div>'
-                                       + '</div>'
-                                   + '</li>'
-                               + sReviews
-                               + '</ul>';
-
-          sReviews += '<div id="modalExibeIsniBigImg">'
-                         + '<span class="closeIsniBigImg">&times;</span>'
-                         + '<img id="isniBigImg">'
-                         + '<div id="captionIsniBigImg"></div>'
-                     + '</div>';
-    
-          $("#display_reviews").html( sReviews );    
-  } 
-
-  function trataExibicaoAvaliacoesIsniComEstrelas( pNumEstrelas ){
-     $("#lnkRemoveFiltroAvaliacoesIsni").show();
-     trataExibicaoIsniAvaliacoesLI(pNumEstrelas);
-  }
-
-  function removeFiltroAvaliacoesIsni(){
-     $("#lnkRemoveFiltroAvaliacoesIsni").hide();
-     trataExibicaoIsniAvaliacoesLI(0);
-  }    
-
-  function trataExibicaoIsniAvaliacoesLI( pNumEstrelas ){
-     var bExibe = false;
-
-     for( var i=1; i<=5; i++ ){
-         bExibe = false;
-         if( pNumEstrelas == 0 ){
-           bExibe = true;
-         }
-         else{
-           bExibe = ( i == pNumEstrelas );           
-         } 
-
-         ( bExibe ? $( "#linkLiMostraAvaliacoesIsni_"+i ).show() : $( "#linkLiMostraAvaliacoesIsni_"+i ).hide() );
-     }    
-     arrIsniReviewsLI.forEach( (umaLi) =>{
-         bExibe = false;
-         if( pNumEstrelas == 0 ){
-             bExibe = true;           
-         }
-         else{
-             bExibe = ( umaLi.numestrelas == pNumEstrelas );         
-         }
-
-         ( bExibe ? $("#"+umaLi.idli).show() : $("#"+umaLi.idli).hide() );
-     });
-  }
-    
-  function getIsniReview(pIdProduto){  
+function getIsniReview(pIdProduto){  
     var currentdate = new Date();
     var datetime = currentdate.getDay() + "_" + currentdate.getMonth() + "_" + currentdate.getFullYear() + "_"
                  + currentdate.getHours() + "_" + currentdate.getMinutes() + "_" + currentdate.getSeconds();
-    var sNomeJson = "https://cdn.shopify.com/s/files/1/0623/5029/5189/files/aval.json?v=" + datetime.toString();
+    var sNomeJson = "https://cdn.shopify.com/s/files/1/0623/5029/5189/files/isni_avaliacoes_" + pIdProduto + ".json?v=" + datetime.toString();
     
     $("#buscandoAvaliacoesIsni").remove();
     document.write("<div id='buscandoAvaliacoesIsni'><img height='20' src='https://cdn.shopify.com/s/files/1/0623/5029/5189/files/loading.gif?v=1731533672'> Buscando avaliações...</div>");
-    $.getJSON( sNomeJson, function(data, status){
-          $("#buscandoAvaliacoesIsni").remove();
-          arrReviewsIsni = data;
-          
-          var iTotalEstrelas = 0;
-           arrReviewsIsni.forEach( (element) =>{
-             iTotalEstrelas += element.numestrelas;     
-           });
-        
-           var iNota = ( iTotalEstrelas / arrReviewsIsni.length );
-           rPorcentagemEstrelas = Math.round( ( 100 * iNota ) / 5 );
-        
-           iNota = Math.round( iNota * 10 ) / 10;
-        
-           sNotaGeralComEstrelas = '<div title="' + iNota + ' estrelas" class="ratingIsni"><div class="ratingIsni-upper" style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>'
-                                 + '<div class="ratingIsni-lower"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div></div>'; 
-        
-           $("#notaGeral1").html( '<a href="javascript:scrollToAvaliacoesIsni()">' + sNotaGeralComEstrelas + '</a>' );
-           
-           $("#lblNumAvaliacoes1").html( arrReviewsIsni.length );
-        
-           rMediaNotaAvaliacoesIsni = iNota;      
-    });
-  } 
 
-  function scrollToAvaliacoesIsni(){
+    setTimeout( function(){
+                    $.getJSON( sNomeJson, function(data, status){
+                          arrReviewsIsni = data;
+                          
+                          var iTotalEstrelas = 0;
+                           arrReviewsIsni.forEach( (element) =>{
+                             iTotalEstrelas += element.numestrelas;     
+                           });
+                        
+                           var iNota = ( iTotalEstrelas / arrReviewsIsni.length );
+                           rPorcentagemEstrelas = Math.round( ( 100 * iNota ) / 5 );
+                        
+                           iNota = Math.round( iNota * 10 ) / 10;
+                        
+                           sNotaGeralComEstrelas = '<div title="' + iNota + ' estrelas" class="ratingIsni"><div class="ratingIsni-upper" style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>'
+                                                 + '<div class="ratingIsni-lower"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div></div>'; 
+                
+                           $("#notaGeralAvaliacoesIsni1").html( '<a href="javascript:scrollToAvaliacoesIsni()">' + sNotaGeralComEstrelas + '</a>' );
+                           
+                           $("#lblNumAvaliacoesIsni1").html( arrReviewsIsni.length );
+
+                           $("#divIsniEstrelaAvaliacoes").show();
+                        
+                           rMediaNotaAvaliacoesIsni = iNota;    
+
+                           $(".ratingIsni-upper").css({
+                              width: rPorcentagemEstrelas + "%"
+                           }); 
+                    })
+                    .done(function() { $("#buscandoAvaliacoesIsni").remove(); })
+                    .always(function() { $("#buscandoAvaliacoesIsni").remove(); });  ;
+               }, 1000 );
+} 
+
+function scrollToAvaliacoesIsni(){
      $('html, body').animate({
-                    scrollTop: $("#display_reviews").offset().top - 150
+                    scrollTop: $("#displayIsniReviews").offset().top - 150
                 }, 1000);  
-  }  
-</script>    
-Avaliações (<label id="lblNumAvaliacoes1"></label>): <label id="notaGeral1"></label>
-<script>getIsniReview("{{ idProduto }}");</script>
+}  
+
+getIsniReview("{{ idProduto }}");
+</script>

@@ -1,14 +1,26 @@
-Acessar o tema default da loja.
+1 - Acessar o tema default da loja e ir em configurações.
 
-1 - No "layout/theme.liquid" adicionar chamada do script da jquery
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+2 - No editar código fonte, colocar na pasta "assets" o jquery mais atual
+    https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js
 
-2 - No "custom css" do tema adicionar o conteúdo do arquivo "codigocss.txt"
+3 - Ainda na pasta "assets" colocar o arquivo "isni-avaliacao.css"
 
-3 - No "sections/main-product.liquid"
+4 - No "layout/theme.liquid"
+    *)adicionar chamada do script da jquery
+      <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+      Obs.: não consigo usar se adicionar sync ou defer
+    
+    *)adicionar chamada do css 
+      {{ 'isni-avaliacao.css' | asset_url | stylesheet_tag }}
+
+5 - Copiar o "imprimeavaliacoes.liquid" e "imprimeestrelas.liquid" para dentro da pasta "snippets"
+
+6 - No "sections/main-product.liquid"
     Colocar a chamada do snippet "imprimeestrelas" onde se deseja exibir o link para  as avaliações
     {%  render 'imprimeestrelas', idProduto: product.id %}
 
-4 - Ainda no "sections/main-product.liquid"
+7 - Ainda no "sections/main-product.liquid"
     Colocar a chamada do snippet "imprimeavaliacoes" onde se deseja exibir as avaliações em si
     {%  render 'imprimeavaliacoes' %}
+
+8 - Copiar o arquivo "isni_avaliacoes.json" para dentro dos arquivos da loja (content->files)    
