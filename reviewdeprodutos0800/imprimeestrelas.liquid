@@ -3,6 +3,8 @@
 </div>
 
 <script>
+const cte_REPOSITORIO_ARQUIVOS_DA_LOJA = "";
+
 var rMediaNotaAvaliacoesIsni = 0;
 var arrReviewsIsni = null;
 var sNotaGeralComEstrelas = '';
@@ -12,10 +14,17 @@ function getIsniReview(pIdProduto){
     var currentdate = new Date();
     var datetime = currentdate.getDay() + "_" + currentdate.getMonth() + "_" + currentdate.getFullYear() + "_"
                  + currentdate.getHours() + "_" + currentdate.getMinutes() + "_" + currentdate.getSeconds();
-    var sNomeJson = "https://cdn.shopify.com/s/files/1/0623/5029/5189/files/isni_avaliacoes_" + pIdProduto + ".json?v=" + datetime.toString();
+
+    if( cte_REPOSITORIO_ARQUIVOS_DA_LOJA == "" ){
+        alert( "Não é possível montar avaliações de produto!\nO caminho da loja não foi definido corretamente, verifique por favor." );
+        $("#buscandoAvaliacoesIsni").remove();
+        return;
+    }
+
+    var sNomeJson = cte_REPOSITORIO_ARQUIVOS_DA_LOJA + "isni_avaliacoes_" + pIdProduto + ".json?v=" + datetime.toString();
     
     $("#buscandoAvaliacoesIsni").remove();
-    document.write("<div id='buscandoAvaliacoesIsni'><img height='20' src='https://cdn.shopify.com/s/files/1/0623/5029/5189/files/loading.gif?v=1731533672'> Buscando avaliações...</div>");
+    document.write("<div id='buscandoAvaliacoesIsni'><img height='20' src='" + cte_REPOSITORIO_ARQUIVOS_DA_LOJA + "isni_loading.webp?v=1732844603'> Buscando avaliações...</div>");
 
     setTimeout( function(){
                     $.getJSON( sNomeJson, function(data, status){
