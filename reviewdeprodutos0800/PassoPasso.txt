@@ -18,9 +18,11 @@
 6 - No "sections/main-product.liquid"
     Colocar a chamada do snippet "imprimeestrelas" onde se deseja exibir o link para  as avaliações
     {%  render 'imprimeestrelas', idProduto: product.id %}
+    linha 109
 
 7 - Ainda no "sections/main-product.liquid"
     Colocar a chamada do snippet "imprimeavaliacoes" onde se deseja exibir as avaliações em si
     {%  render 'imprimeavaliacoes' %}
+    linha 681
 
 8 - Copiar o arquivo "isni_avaliacoes.json" para dentro dos arquivos da loja (content->files)    
