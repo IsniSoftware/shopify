@@ -1,8 +1,0 @@
-npm install --save express
-npm install --save socket.io
-npm install --save qrcode
-baixar para o diretorio de instalação a pasta "helpers" disponibilizada no github
-
-
-Se der erro no puppeteer
-https://stackoverflow.com/questions/68051648/could-not-find-expected-browser-chrome-locally
